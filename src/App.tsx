@@ -1,10 +1,10 @@
 import './App.css'
-import PrimarySearchAppBar from './components/PrimarySearchAppBar'
+import ResponsiveAppBar from './components/ResponsiveAppBar'
 
 function App() {
 
   return (
-    <PrimarySearchAppBar></PrimarySearchAppBar>
+    <ResponsiveAppBar></ResponsiveAppBar>
   )
 }
 
