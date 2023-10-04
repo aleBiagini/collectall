@@ -1,0 +1,10 @@
+.multiple-select-placeholder{
+    max-width: 62.5vw;
+    margin: 0 auto;
+}
+
+@media (max-width: 1920px) {
+    .multiple-select-placeholder{
+        max-width: 1200px;
+    }
+}
