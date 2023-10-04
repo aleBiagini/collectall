@@ -20,16 +20,36 @@ const MenuProps = {
 };
 
 const names = [
-  "Set Base",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
+  {
+    key: 0,
+    name: "Set Base",
+    id: "base1"
+  },
+  {
+    key: 1,
+    name: "Jungle",
+    id: "base2"
+  },
+  {
+    key: 2,
+    name: "Fossil",
+    id: "base3"
+  },
+  {
+    key: 3,
+    name: "Base Set 2",
+    id: "base4"
+  },
+  {
+    key: 4,
+    name: "Team Rocket",
+    id: "base5"
+  },
+  {
+    key: 5,
+    name: "Legendary Collection",
+    id: "base6"
+  }
 ];
 
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
@@ -54,7 +74,7 @@ export default function MultipleSelectPlaceholder() {
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
-    const result = await GetSet("base1");
+    const result = await GetSet(value);
     setSelectedValue(result);
   };
 
@@ -73,7 +93,12 @@ export default function MultipleSelectPlaceholder() {
                 return <em>Placeholder</em>;
               }
 
-              return selected.join(", ");
+              const selectedNames = selected.map((value) => {
+                const selectedName = names.find((name) => name.id === value);
+                return selectedName ? selectedName.name : value;
+              });
+
+              return selectedNames.join(", ");
             }}
             MenuProps={MenuProps}
             inputProps={{ "aria-label": "Without label" }}
@@ -83,11 +108,11 @@ export default function MultipleSelectPlaceholder() {
             </MenuItem>
             {names.map((name) => (
               <MenuItem
-                key={name}
-                value={name}
-                style={getStyles(name, personName, theme)}
+                key={name.key}
+                value={name.id}
+                style={getStyles(name.name, personName, theme)}
               >
-                {name}
+                {name.name}
               </MenuItem>
             ))}
           </Select>
