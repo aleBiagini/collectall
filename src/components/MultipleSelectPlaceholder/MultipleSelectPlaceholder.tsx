@@ -7,6 +7,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import "./MultipleSelectPlaceholder.css";
 import { GetSet } from "../../services/SetService";
 import StandardImageList from "../StandardImageList/StandardImageList";
+import { Card } from "../../models/Card";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -64,7 +65,7 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 export default function MultipleSelectPlaceholder() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState<string[]>([]);
-  const [selectedValue, setSelectedValue] = React.useState<string[]>([]);
+  const [selectedValue, setSelectedValue] = React.useState<Card[]>([]);
 
   const handleChange = async (event: SelectChangeEvent<typeof personName>) => {
     const {
