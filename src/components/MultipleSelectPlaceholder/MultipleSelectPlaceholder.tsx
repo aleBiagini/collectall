@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import "./MultipleSelectPlaceholder.css"
+import { GetSet } from '../../services/SetService';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -18,7 +19,7 @@ const MenuProps = {
 };
 
 const names = [
-  'Oliver Hansen',
+  'Set Base',
   'Van Henry',
   'April Tucker',
   'Ralph Hubbard',
@@ -51,6 +52,7 @@ export default function MultipleSelectPlaceholder() {
       // On autofill we get a stringified value.
       typeof value === 'string' ? value.split(',') : value,
     );
+    GetSet("base1");
   };
 
   return (
