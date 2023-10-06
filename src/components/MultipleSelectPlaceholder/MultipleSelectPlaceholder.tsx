@@ -5,9 +5,11 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import "./MultipleSelectPlaceholder.css";
-import { GetSet } from "../../services/SetService";
+import { GetSet, GetSets } from "../../services/SetService";
 import StandardImageList from "../StandardImageList/StandardImageList";
 import { Card } from "../../models/Card";
+import { ISet } from "../../models/ISet";
+import { useEffect } from "react";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -19,39 +21,6 @@ const MenuProps = {
     },
   },
 };
-
-const names = [
-  {
-    key: 0,
-    name: "Set Base",
-    id: "base1"
-  },
-  {
-    key: 1,
-    name: "Jungle",
-    id: "base2"
-  },
-  {
-    key: 2,
-    name: "Fossil",
-    id: "base3"
-  },
-  {
-    key: 3,
-    name: "Base Set 2",
-    id: "base4"
-  },
-  {
-    key: 4,
-    name: "Team Rocket",
-    id: "base5"
-  },
-  {
-    key: 5,
-    name: "Legendary Collection",
-    id: "base6"
-  }
-];
 
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
   return {
@@ -66,6 +35,21 @@ export default function MultipleSelectPlaceholder() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState<string[]>([]);
   const [selectedValue, setSelectedValue] = React.useState<Card[]>([]);
+  const [listSet, setListSet] = React.useState<ISet[]>([]);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await GetSets();
+        setListSet(result);
+      } catch (error) {
+        console.log('Error fetching data:', error);
+      }
+    }
+  
+    fetchData();
+  }, [])
+  
 
   const handleChange = async (event: SelectChangeEvent<typeof personName>) => {
     const {
@@ -95,7 +79,7 @@ export default function MultipleSelectPlaceholder() {
               }
 
               const selectedNames = selected.map((value) => {
-                const selectedName = names.find((name) => name.id === value);
+                const selectedName = listSet.find((set) => set.id === value);
                 return selectedName ? selectedName.name : value;
               });
 
@@ -107,13 +91,13 @@ export default function MultipleSelectPlaceholder() {
             <MenuItem disabled value="">
               <em>Placeholder</em>
             </MenuItem>
-            {names.map((name) => (
+            {listSet.map((set) => (
               <MenuItem
-                key={name.key}
-                value={name.id}
-                style={getStyles(name.name, personName, theme)}
+                key={set.id}
+                value={set.id}
+                style={getStyles(set.name, personName, theme)}
               >
-                {name.name}
+                {set.name}
               </MenuItem>
             ))}
           </Select>
