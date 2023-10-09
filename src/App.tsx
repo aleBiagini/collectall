@@ -1,6 +1,6 @@
 import "./App.css";
 import MultipleSelectPlaceholder from "./components/MultipleSelectPlaceholder/MultipleSelectPlaceholder";
-import ResponsiveAppBar from "./components/ResponsiveAppBar";
+import ResponsiveAppBar from "./components/ResponsiveAppBar/ResponsiveAppBar";
 
 function App() {
   return (
