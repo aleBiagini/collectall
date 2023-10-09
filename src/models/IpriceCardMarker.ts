@@ -14,3 +14,4 @@ export interface IpriceCardMarker {
     reverseHoloAvg1: number;
     reverseHoloAvg7: number;
     reverseHoloAvg30: number;
+}
