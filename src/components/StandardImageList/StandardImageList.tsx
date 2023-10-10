@@ -1,8 +1,9 @@
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import "./StandardImageList.css"
+import { IStandardImageList } from '../../models/IStandardImageList';
 
-export default function StandardImageList({ selectedValue }) {
+export default function StandardImageList({ selectedValue }: IStandardImageList) {
 
   if (!selectedValue || !selectedValue.data) {
     return null; 
