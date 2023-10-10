@@ -1,12 +1,13 @@
-import { Card } from "../models/Card";
-import { ISet } from "../models/ISet";
+import { CardTypeEnum } from "../models/Global/CardTypeEnum";
+import { SelectOption } from "../models/Global/SelectOption";
 
-export const GetSet = async (id: string | string[]): Promise<Array<Card>> => {
-    const response = await fetch(`https://api.pokemontcg.io/v2/cards?q=set.id:${id}`).then(response => response.json());
-    return response;
-}
-
-export const GetSets = async (): Promise<Array<ISet>> => {
-    const response = await fetch(`https://api.pokemontcg.io/v2/sets`).then(response => response.json());
-    return response.data;
+export const GetSets = async (currentCardType: CardTypeEnum): Promise<Array<SelectOption> | null> => {
+    //if pokemon
+    if (currentCardType == CardTypeEnum.Pokemon) {
+        const response = await fetch(`https://api.pokemontcg.io/v2/sets`).then(response => response.json());
+        return response.data;
+    } else if (currentCardType == CardTypeEnum.Magic) {
+        //logic for magic
+    }
+    return null;
 }

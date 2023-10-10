@@ -8,12 +8,13 @@ import { IResistance } from "./IResistance";
 import { ITCGPlayer } from "./ITCGPlayer";
 import { IWeakness } from "./IWeakness";
 import { ISet } from "./ISet";
+import { IBaseCard } from "../Global/IBaseCard";
 
-export interface Card {
-  id: string;
-  name: string;
-  supertype: string;
-  subtypes: string[];
+export class PokemonCard implements IBaseCard {
+  id!: string;
+  name!: string;
+  supertype!: string;
+  subtypes!: string[];
   hp?: string;
   types?: string[];
   evolesFrom?: string;
@@ -26,14 +27,14 @@ export interface Card {
   resistances?: IResistance[];
   retreatCost?: string[];
   convertedRetreatCost?: number;
-  set: ISet;
-  number: string;
+  set!: ISet;
+  number!: string;
   artist?: string;
-  rarity: string;
+  rarity!: string;
   flavorText?: string;
   nationalPokedexNumbers?: number[];
-  legalities: ILegality;
-  images: ICardImage;
+  legalities!: ILegality;
+  images!: ICardImage;
   tcgplayer?: ITCGPlayer;
   cardmarket?: ICardmarket;
 }

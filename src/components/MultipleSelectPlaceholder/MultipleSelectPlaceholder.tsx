@@ -10,6 +10,7 @@ import StandardImageList from "../StandardImageList/StandardImageList";
 import { Card } from "../../models/Card";
 import { ISet } from "../../models/ISet";
 import { useEffect } from "react";
+import useMultipleSelectPlaceholderStore from "../../states/MultipleSelectPlaceholderState";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -33,34 +34,32 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 
 export default function MultipleSelectPlaceholder() {
   const theme = useTheme();
-  const [personName, setPersonName] = React.useState<string[]>([]);
-  const [selectedValue, setSelectedValue] = React.useState<Card[]>([]);
-  const [listSet, setListSet] = React.useState<ISet[]>([]);
-  
+  const store = useMultipleSelectPlaceholderStore();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await GetSets();
-        setListSet(result);
+        const result = await GetSets(state.currentcardtype);
+        store.setOptionList(result);
       } catch (error) {
         console.log('Error fetching data:', error);
       }
     }
-  
+
     fetchData();
   }, [])
-  
 
-  const handleChange = async (event: SelectChangeEvent<typeof personName>) => {
+
+  const handleChange = async (event: SelectChangeEvent<typeof optionName>) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
+    setOptionName(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
     const result = await GetSet(value);
-    setSelectedValue(result);
+    setCardArray(result);
   };
 
   return (
@@ -70,7 +69,7 @@ export default function MultipleSelectPlaceholder() {
           <Select
             multiple
             displayEmpty
-            value={personName}
+            value={optionName}
             onChange={handleChange}
             input={<OutlinedInput />}
             renderValue={(selected) => {
@@ -79,7 +78,7 @@ export default function MultipleSelectPlaceholder() {
               }
 
               const selectedNames = selected.map((value) => {
-                const selectedName = listSet.find((set) => set.id === value);
+                const selectedName = optionList.find((set) => set.id === value);
                 return selectedName ? selectedName.name : value;
               });
 
@@ -91,11 +90,11 @@ export default function MultipleSelectPlaceholder() {
             <MenuItem disabled value="">
               <em>Placeholder</em>
             </MenuItem>
-            {listSet.map((set) => (
+            {optionList.map((set) => (
               <MenuItem
                 key={set.id}
                 value={set.id}
-                style={getStyles(set.name, personName, theme)}
+                style={getStyles(set.name, optionName, theme)}
               >
                 {set.name}
               </MenuItem>
@@ -103,7 +102,6 @@ export default function MultipleSelectPlaceholder() {
           </Select>
         </FormControl>
       </div>
-      <StandardImageList selectedValue={selectedValue}></StandardImageList>
     </>
   );
 }

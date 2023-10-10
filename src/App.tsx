@@ -1,12 +1,12 @@
 import "./App.css";
-import MultipleSelectPlaceholder from "./components/MultipleSelectPlaceholder/MultipleSelectPlaceholder";
+import Dashboard from "./components/Dashboard/Dashboard";
 import ResponsiveAppBar from "./components/ResponsiveAppBar/ResponsiveAppBar";
 
 function App() {
   return (
     <>
       <ResponsiveAppBar></ResponsiveAppBar>
-      <MultipleSelectPlaceholder></MultipleSelectPlaceholder>
+      <Dashboard></Dashboard>
     </>
   );
 }
